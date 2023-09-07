@@ -4,10 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Speedtest Custom - Test your internet speeds</title>
-    <link rel="stylesheet" type="text/css" href="./static/css/gauge.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='css/gauge.min.css', _external=True) }}"/>
     <script>
-        var testGlobals = {{ data  | tojson | safe }};
+        var testGlobals = {{ data_ip  | tojson | safe }};
+        var testReport = {{  data_rep | tojson | safe }};
+
         window.ST_PARAMS = {
+            {##}
             "subdomain": "loukky",
             "testConfiguration": {
                 "testConfigurationId": 92320,
@@ -43,6 +47,7 @@
                 "isEUCountry": false
             },
             "config": {
+                {#替换成自个的#}
                 "rootDomain": "speedtestcustom.com",
                 "logoCdnUrl": "https://logos.speedtestcustom.com/prod/",
                 "countriesWithVat": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "GB"],
@@ -63,7 +68,7 @@
                 },
                 "privacyPolicyUpdated": "2018-05-18"
             },
-            "testReport": null,
+
             "serverList": [],
             "injectDataForPerfTesting": false,
             "engineOverrides": {
@@ -78,10 +83,11 @@
             "engine": {}
         };
         window.ST_PARAMS.testGlobals = testGlobals;
+        window.ST_PARAMS.testReport = testReport;
     </script>
 </head>
 <body style='margin:0;padding:0;height:100%;'>
 <div id="root"></div>
-<script src="./static/js/testBundle.js" crossorigin></script>
+<script src="{{ url_for('static', filename='js/testBundle.js', _external=True) }}" crossorigin></script>
 </body>
 </html>
