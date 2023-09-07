@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    from isp import get_ip_info
+    from ip_info import get_ip_info
     client_ip = request.remote_addr
     data = get_ip_info(client_ip)
     return render_template('index.html', data=data)
@@ -14,7 +14,7 @@ def index():
 # 返回Speedtest Server
 @app.route('/api/js/servers')
 def get_json_datas():
-    from serverlist import serverList
+    from speedtest_servers import serverList
     data = serverList
     return jsonify(data)
 
