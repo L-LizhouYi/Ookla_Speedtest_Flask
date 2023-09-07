@@ -21,66 +21,68 @@ RESERVED_IPV4 = [
     '255.255.255.255/32'
 ]
 
+API_URL = "http://ip-api.com/json/"
+
 
 def ip2int(ip):
     return sum(int(p) << i for i, p in zip([24, 16, 8, 0], ip.split('.')))
 
 
-ipRanges = [(ip2int(ip), ip2int(ip) + (1 << 32 >> int(m)) - 1)
-            for rip in RESERVED_IPV4 for ip, m in [rip.split("/")]]
-ipStarts, ipEnds = zip(*sorted(ipRanges))
-firstByte = {b for s, e in ipRanges for b in range(s >> 24, (e >> 24) + 1)}
+def get_reserved_ranges():
+    return [(ip2int(ip), ip2int(ip) + (1 << 32 >> int(m)) - 1) for rip in RESERVED_IPV4 for ip, m in [rip.split("/")]]
 
 
-def isReserved(ip):
-    if ip >> 24 not in firstByte: return False
-    i = max(0, bisect_right(ipStarts, ip) - 1)
-    return ipStarts[i] <= ip <= ipEnds[i]
-
-
-# 模板数据
-testGlobals = {
-    "ipAddress": "127.0.0.1",
-    "ispName": "LocalHost",
-    "ispId": 0,
-    "location": {
-        "latitude": 0,
-        "longitude": 0,
-        "cityName": "unknown",
-        "countryCode": "unknown",
-        "countryName": "unknown",
-        "regionCode": "unknown",
-        "regionName": "unknown"
-    }
-}
+def is_reserved(ip):
+    ip_ranges = get_reserved_ranges()
+    ip_starts, ip_ends = zip(*sorted(ip_ranges))
+    first_byte = {b for s, e in ip_ranges for b in range(s >> 24, (e >> 24) + 1)}
+    if ip >> 24 not in first_byte:
+        return False
+    i = max(0, bisect_right(ip_starts, ip) - 1)
+    return ip_starts[i] <= ip <= ip_ends[i]
 
 
 def get_ip_info(ip):
-    if isReserved(ip2int(ip)):
-        testGlobals["ipAddress"] = ip
+    test_globals = {
+        "ipAddress": "127.0.0.1",
+        "ispName": "LocalHost",
+        "ispId": 0,
+        "location": {
+            "latitude": 0,
+            "longitude": 0,
+            "cityName": "unknown",
+            "countryCode": "unknown",
+            "countryName": "unknown",
+            "regionCode": "unknown",
+            "regionName": "unknown"
+        }
+    }
+
+    if is_reserved(ip2int(ip)):
+        test_globals["ipAddress"] = ip
     else:
         try:
-            response = requests.get(f"http://ip-api.com/json/{ip}")
+            response = requests.get(f"{API_URL}{ip}")
             if response.status_code == 200:
-                resJosn = response.json()
-                testGlobals["ipAddress"] = resJosn["query"]
-                testGlobals["ispName"] = resJosn["isp"]
-                testGlobals["location"]["latitude"] = resJosn["lat"]
-                testGlobals["location"]["longitude"] = resJosn["lon"]
-                testGlobals["location"]["cityName"] = resJosn["city"]
-                testGlobals["location"]["countryCode"] = resJosn["countryCode"]
-                testGlobals["location"]["countryName"] = resJosn["country"]
-                testGlobals["location"]["regionCode"] = resJosn["region"]
-                testGlobals["location"]["regionName"] = resJosn["regionName"]
+                res_json = response.json()
+                location = test_globals["location"]
+                location.update({
+                    "latitude": res_json["lat"],
+                    "longitude": res_json["lon"],
+                    "cityName": res_json["city"],
+                    "countryCode": res_json["countryCode"],
+                    "countryName": res_json["country"],
+                    "regionCode": res_json["region"],
+                    "regionName": res_json["regionName"]
+                })
+                test_globals["ipAddress"] = res_json["query"]
+                test_globals["ispName"] = res_json["isp"]
+        except requests.RequestException as e:
+            print(f"从API获取数据时出错：{e}")
 
-        except:
-            pass
-
-    return testGlobals
+    return test_globals
 
 
 if __name__ == '__main__':
-    # a = get_ip_info("8.8.8.8")
-    # print(a)
-    a = isReserved(ip2int('192.18.1.1'))
+    a = is_reserved(ip2int('192.18.1.1'))
     print(a)
