@@ -1,7 +1,6 @@
 from flask import Flask, jsonify, render_template, request, redirect, url_for
-from ip_info import get_ip_info
-from speedtest_servers import ServerList
-from sqlite_server import Speedtest
+from modules.ip_info import get_ip_info
+from modules.sqlite_server import Speedtest
 
 app = Flask(__name__)
 app.config['STATIC_URL_PATH'] = '/static'
@@ -26,8 +25,9 @@ def not_found(error):
 # 返回Speedtest Server
 @app.route('/api/js/servers')
 def get_json_datas():
-    data = ServerList
-    return jsonify(data)
+    objData = ObjSpeedtest.get_servers()
+    ServerList = [i for i in objData]
+    return jsonify(ServerList)
 
 
 # 测速完成，用于接收数据
