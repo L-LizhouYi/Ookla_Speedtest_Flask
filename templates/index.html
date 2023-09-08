@@ -11,9 +11,10 @@
     <script>
         var testGlobals = {{ data_ip  | tojson | safe }};
         var testReport = {{  data_rep | tojson | safe }};
-
         var subdomain = "{{ greeting.subdomain }}";
         var rootDomain = "{{ greeting.rootDomain }}";
+        var backgroundColor = "{{ greeting.backgroundColor }}";
+        var primaryColor = "{{ greeting.primaryColor }}"
 
         window.ST_PARAMS = {
             {##}
@@ -41,8 +42,8 @@
                 "allowSpeedtestUrls": false,
                 "passwordProtected": false,
                 "themeColors": {
-                    "backgroundColor": "#ffffff",
-                    "primaryColor": "#120d14"
+                    "backgroundColor": backgroundColor,
+                    "primaryColor": primaryColor
                 },
                 "serverIcon": "internet",
                 "speedLabel": "Mbps",

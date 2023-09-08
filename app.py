@@ -15,7 +15,9 @@ def inject_global_variables():
     greeting = {
         "title":"Ookla_Speedtest_Flask",
         "subdomain": "Ookla",
-        "rootDomain": "speedtest.net"
+        "rootDomain": "speedtest.net",
+        "backgroundColor": "#ffffff",
+        "primaryColor": "#120d14"
     }
     return dict(greeting=greeting)
 
