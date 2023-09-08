@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Speedtest Custom - Test your internet speeds</title>
+    <title>{{ greeting.title }}</title>
     <link rel="stylesheet" type="text/css"
           href="{{ url_for('static', filename='css/gauge.min.css', _external=True) }}"/>
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico', _external=True) }}"
@@ -12,9 +12,12 @@
         var testGlobals = {{ data_ip  | tojson | safe }};
         var testReport = {{  data_rep | tojson | safe }};
 
+        var subdomain = "{{ greeting.subdomain }}";
+        var rootDomain = "{{ greeting.rootDomain }}";
+
         window.ST_PARAMS = {
             {##}
-            "subdomain": "loukky",
+            "subdomain": subdomain,
             "testConfiguration": {
                 "testConfigurationId": 92320,
                 "subscriptionId": 12000242,
@@ -50,7 +53,7 @@
             },
             "config": {
                 {#替换成自个的#}
-                "rootDomain": "speedtestcustom.com",
+                "rootDomain": rootDomain,
                 "logoCdnUrl": "https://logos.speedtestcustom.com/prod/",
                 "countriesWithVat": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "GB"],
                 "premiumSubscriptionBasePrice": 1995,
@@ -70,8 +73,6 @@
                 },
                 "privacyPolicyUpdated": "2018-05-18"
             },
-
-            "serverList": [],
             "injectDataForPerfTesting": false,
             "engineOverrides": {
                 "download": null,
@@ -82,10 +83,12 @@
                 "buildId": 1693266242330,
                 "level": "info"
             },
-            "engine": {}
+            "engine": {},
+            "serverList": [],
+            "testGlobals": testGlobals,
+            "testReport": testReport
         };
-        window.ST_PARAMS.testGlobals = testGlobals;
-        window.ST_PARAMS.testReport = testReport;
+
     </script>
 </head>
 <body style='margin:0;padding:0;height:100%;'>

@@ -9,6 +9,15 @@ TEMPLATE_NAME = 'index.html'
 # 初始化数据库
 ObjSpeedtest = Speedtest()
 
+# 定义上下文全局变量
+@app.context_processor
+def inject_global_variables():
+    greeting = {
+        "title":"Ookla_Speedtest_Flask",
+        "subdomain": "Ookla",
+        "rootDomain": "speedtest.net"
+    }
+    return dict(greeting=greeting)
 
 # 根路由
 @app.route('/')
