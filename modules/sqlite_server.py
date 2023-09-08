@@ -5,11 +5,8 @@ from datetime import datetime
 import uuid
 import pytz
 
-# 创建数据库引擎
 engine = create_engine('sqlite:///speedtest.db')
-# 创建表格基类
 Base = declarative_base()
-
 cst = pytz.timezone('Asia/Shanghai')
 
 # 定义数据模型类
@@ -45,9 +42,8 @@ class SpeedtestHistory(Base):
     latency = Column(Integer)
     upload = Column(Integer)
     download = Column(Integer)
-    guid = Column(String, unique=True, default=str(uuid.uuid4()))
-    # resultDate = Column(DateTime, default=datetime.utcnow)
-    resultDate = Column(DateTime, default=datetime.now(cst))
+    guid = Column(String, unique=True, default=lambda: str(uuid.uuid4()))
+    resultDate = Column(DateTime, default=lambda: datetime.now(cst))
 
 
 class Speedtest:
@@ -59,10 +55,14 @@ class Speedtest:
         self.session.close()
 
     # 从数据库中获取服务器
-    def get_servers(self):
-        server_records = self.session.query(SpeedtestServer).limit(10).all()
-        for server in server_records:
-            yield {
+    def get_servers(self,limit,search_engine):
+        query = self.session.query(SpeedtestServer)
+        if search_engine != "js":
+            query = query.filter(SpeedtestServer.sponsor.like(f"%{search_engine}%"))
+
+        server_records = query.limit(limit).all()
+        return [
+            {
                 "id": server.id,
                 "sponsor": server.sponsor,
                 "name": server.name,
@@ -79,6 +79,8 @@ class Speedtest:
                 "show": server.show,
                 "internal": server.internal
             }
+            for server in server_records
+        ]
 
     # 通过id获取单个服务器信息
     def get_server_info(self, id):

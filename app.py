@@ -9,12 +9,14 @@ TEMPLATE_NAME = 'index.html'
 # 初始化数据库
 ObjSpeedtest = Speedtest()
 
+
 # 根路由
 @app.route('/')
 def index():
     client_ip = request.remote_addr
     data_ip = get_ip_info(client_ip)
     return render_template(TEMPLATE_NAME, data_ip=data_ip, data_rep=None)
+
 
 # 处理 404 错误的函数
 @app.errorhandler(404)
@@ -23,9 +25,18 @@ def not_found(error):
 
 
 # 返回Speedtest Server
-@app.route('/api/js/servers')
+@app.route('/api/js/servers', methods=['GET'])
 def get_json_datas():
-    objData = ObjSpeedtest.get_servers()
+    limit = request.args.get('limit')
+    search = request.args.get('search', None)
+    engine = request.args.get('engine', None)
+
+    if engine != None:
+        objData = ObjSpeedtest.get_servers(limit=limit, search_engine=engine)
+
+    else:
+        objData = ObjSpeedtest.get_servers(limit=limit, search_engine=search)
+
     ServerList = [i for i in objData]
     return jsonify(ServerList)
 
