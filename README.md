@@ -30,37 +30,12 @@ python3 app.py
 网上收集的一些节点，不保证可用性毕竟都自建了。
 
 ```sqlite
-INSERT INTO "main"."speedtest_servers"("id", "sponsor", "name", "host", "url", "country", "cc", "lat", "lon",
-                                       "distance", "preferred", "https_functional", "force_ping_select", "show",
-                                       "internal")
-VALUES (2, '湖南联通 5G', '长沙', 'speedtest01.hn165.com.prod.hosts.ooklaserver.net:8080',
-        'http://speedtest01.hn165.com.prod.hosts.ooklaserver.net:8080/speedtest/upload.php', 'China', 'CN', 0.0, 0.0, 0,
-        0, 1, 1, 1, 0);
-INSERT INTO "main"."speedtest_servers"("id", "sponsor", "name", "host", "url", "country", "cc", "lat", "lon",
-                                       "distance", "preferred", "https_functional", "force_ping_select", "show",
-                                       "internal")
-VALUES (3, '河南联通 5G', '郑州', '5gtest.shangdu.com:8080', 'http://5gtest.shangdu.com:8080/speedtest/upload.php',
-        'China', 'CN', 0.0, 0.0, 0, 0, 1, 1, 1, 0);
-INSERT INTO "main"."speedtest_servers"("id", "sponsor", "name", "host", "url", "country", "cc", "lat", "lon",
-                                       "distance", "preferred", "https_functional", "force_ping_select", "show",
-                                       "internal")
-VALUES (4, '天津电信', '天津', 'tjrate.tjtele.com.prod.hosts.ooklaserver.net:8080',
-        'http://tjrate.tjtele.com:8080/speedtest/upload.php', 'China', 'CN', 0.0, 0.0, 0, 0, 1, 1, 1, 0);
-INSERT INTO "main"."speedtest_servers"("id", "sponsor", "name", "host", "url", "country", "cc", "lat", "lon",
-                                       "distance", "preferred", "https_functional", "force_ping_select", "show",
-                                       "internal")
-VALUES (5, '天津电信 5G', '天津', 'sy.tjtele.com.prod.hosts.ooklaserver.net:8080',
-        'http://speedtest1.ah163.com:8080/speedtest/upload.php', 'China', 'CN', 0.0, 0.0, 0, 0, 1, 1, 1, 0);
-INSERT INTO "main"."speedtest_servers"("id", "sponsor", "name", "host", "url", "country", "cc", "lat", "lon",
-                                       "distance", "preferred", "https_functional", "force_ping_select", "show",
-                                       "internal")
-VALUES (6, '江苏联通', '无锡', 'speedtest2.niutk.com.prod.hosts.ooklaserver.net:8080',
-        'https://speedtest2.niutk.com:8080/speedtest/upload.php', 'China', 'CN', 0.0, 0.0, 0, 0, 1, 1, 1, 0);
-INSERT INTO "main"."speedtest_servers"("id", "sponsor", "name", "host", "url", "country", "cc", "lat", "lon",
-                                       "distance", "preferred", "https_functional", "force_ping_select", "show",
-                                       "internal")
-VALUES (7, '甘肃移动', '兰州', 'speed.bajianjun.com.prod.hosts.ooklaserver.net:8080',
-        'http://speed.bajianjun.com:8080/speedtest/upload.php', 'China', 'CN', 0.0, 0.0, 0, 0, 1, 1, 1, 0);
+INSERT INTO "main"."speedtest_servers"("id", "sponsor", "name", "host", "url", "country", "cc", "lat", "lon", "distance", "preferred", "https_functional", "force_ping_select", "show", "internal") VALUES (2, '湖南联通 5G', '长沙', 'speedtest01.hn165.com.prod.hosts.ooklaserver.net:8080', 'http://speedtest01.hn165.com.prod.hosts.ooklaserver.net:8080/speedtest/upload.php', 'China', 'CN', 0.0, 0.0, 0, 0, 1, 1, 1, 0);
+INSERT INTO "main"."speedtest_servers"("id", "sponsor", "name", "host", "url", "country", "cc", "lat", "lon", "distance", "preferred", "https_functional", "force_ping_select", "show", "internal") VALUES (3, '河南联通 5G', '郑州', '5gtest.shangdu.com:8080', 'http://5gtest.shangdu.com:8080/speedtest/upload.php', 'China', 'CN', 0.0, 0.0, 0, 0, 1, 1, 1, 0);
+INSERT INTO "main"."speedtest_servers"("id", "sponsor", "name", "host", "url", "country", "cc", "lat", "lon", "distance", "preferred", "https_functional", "force_ping_select", "show", "internal") VALUES (4, '天津电信', '天津', 'tjrate.tjtele.com.prod.hosts.ooklaserver.net:8080', 'http://tjrate.tjtele.com:8080/speedtest/upload.php', 'China', 'CN', 0.0, 0.0, 0, 0, 1, 1, 1, 0);
+INSERT INTO "main"."speedtest_servers"("id", "sponsor", "name", "host", "url", "country", "cc", "lat", "lon", "distance", "preferred", "https_functional", "force_ping_select", "show", "internal") VALUES (5, '天津电信 5G', '天津', 'sy.tjtele.com.prod.hosts.ooklaserver.net:8080', 'http://speedtest1.ah163.com:8080/speedtest/upload.php', 'China', 'CN', 0.0, 0.0, 0, 0, 1, 1, 1, 0);
+INSERT INTO "main"."speedtest_servers"("id", "sponsor", "name", "host", "url", "country", "cc", "lat", "lon", "distance", "preferred", "https_functional", "force_ping_select", "show", "internal") VALUES (6, '江苏联通', '无锡', 'speedtest2.niutk.com.prod.hosts.ooklaserver.net:8080', 'https://speedtest2.niutk.com:8080/speedtest/upload.php', 'China', 'CN', 0.0, 0.0, 0, 0, 1, 1, 1, 0);
+INSERT INTO "main"."speedtest_servers"("id", "sponsor", "name", "host", "url", "country", "cc", "lat", "lon", "distance", "preferred", "https_functional", "force_ping_select", "show", "internal") VALUES (7, '甘肃移动', '兰州', 'speed.bajianjun.com.prod.hosts.ooklaserver.net:8080', 'http://speed.bajianjun.com:8080/speedtest/upload.php', 'China', 'CN', 0.0, 0.0, 0, 0, 1, 1, 1, 0);
 ```
 
 ## Sqlite表
