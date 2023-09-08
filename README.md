@@ -47,7 +47,7 @@ INSERT INTO "main"."speedtest_servers"("id", "sponsor", "name", "host", "url", "
 [Speedtest 官方文档](https://support.ookla.com/hc/en-us/categories/204419868-Speedtest-Servers) 点开这个链接
 照着说明安装即可，服务默认占用 8080 和 5060
 这两个端口.<br />![image.png](https://cdn.nlark.com/yuque/0/2023/png/28988047/1694081715138-3657a621-f3bc-4a8c-b014-7652f3214240.png#averageHue=%23fefefd&clientId=u26744b90-b7a7-4&from=paste&height=956&id=ubf50a9ae&originHeight=956&originWidth=1433&originalType=binary&ratio=1&rotation=0&showTitle=false&size=57811&status=done&style=none&taskId=u78951512-26c0-44e8-ba2c-bcf0b073eae&title=&width=1433)<br />
-使用数据库管理软件插入服务器信息，重启前端，url 和 host 必填<br />有DNS的话可以配置域名，没有就直接写IP
+使用数据库管理软件插入服务器信息,有DNS的话可以配置域名，没有就直接写IP
 
 ## 常见错误
 
