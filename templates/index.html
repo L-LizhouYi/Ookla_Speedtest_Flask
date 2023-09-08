@@ -6,6 +6,8 @@
     <title>Speedtest Custom - Test your internet speeds</title>
     <link rel="stylesheet" type="text/css"
           href="{{ url_for('static', filename='css/gauge.min.css', _external=True) }}"/>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico', _external=True) }}"
+          type="image/x-icon">
     <script>
         var testGlobals = {{ data_ip  | tojson | safe }};
         var testReport = {{  data_rep | tojson | safe }};
