@@ -134,6 +134,7 @@ if __name__ == '__main__':
     # 创建表格
     Base.metadata.create_all(engine)
 
+    '''
     Session = sessionmaker(bind=engine)
     session = Session()
 
@@ -154,7 +155,7 @@ if __name__ == '__main__':
         show=1,
         internal=0
     )
-    #
-    # # 添加记录到会话并提交更改
+
     session.add(server_info)
     session.commit()
+    '''
