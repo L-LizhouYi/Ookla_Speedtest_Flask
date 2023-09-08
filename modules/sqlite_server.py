@@ -9,6 +9,7 @@ engine = create_engine('sqlite:///speedtest.db')
 Base = declarative_base()
 cst = pytz.timezone('Asia/Shanghai')
 
+
 # 定义数据模型类
 class SpeedtestServer(Base):
     __tablename__ = 'speedtest_servers'
@@ -55,7 +56,7 @@ class Speedtest:
         self.session.close()
 
     # 从数据库中获取服务器
-    def get_servers(self,limit,search_engine):
+    def get_servers(self, limit, search_engine):
         query = self.session.query(SpeedtestServer)
         if search_engine != "js":
             query = query.filter(SpeedtestServer.sponsor.like(f"%{search_engine}%"))
@@ -92,18 +93,20 @@ class Speedtest:
         return result
 
     # 添加测速记录
-    def add_speedtest_log(self,data):
-        # data = {
-        #     "ispName": "39.87.54.3",
-        #     "serverSponsor": "湖南联通5G（官方）",
-        #     "serverName": "长沙",
-        #     "serverId": 0,
-        #     "jitter": 47.888888888888886,
-        #     "latency": 36,
-        #     "upload": 5699375,
-        #     "download": 1319375,
-        #     "guid": "0938c990-4d90-11ee-a138-3d1d9426b53e"
-        # }
+    def add_speedtest_log(self, data):
+        ''' data 数据格式
+        {
+            "ispName": "39.87.54.3",
+            "serverSponsor": "湖南联通5G（官方）",
+            "serverName": "长沙",
+            "serverId": 0,
+            "jitter": 47.888888888888886,
+            "latency": 36,
+            "upload": 5699375,
+            "download": 1319375,
+            "guid": "0938c990-4d90-11ee-a138-3d1d9426b53e"
+        }
+        '''
 
         speedtest_history = SpeedtestHistory(**data)
         self.session.add(speedtest_history)
@@ -131,25 +134,27 @@ if __name__ == '__main__':
     # 创建表格
     Base.metadata.create_all(engine)
 
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
     # 添加Server服务器
-    # server_info = SpeedtestServer(
-    #     sponsor="Home (内网)",
-    #     name="Esxi交换机",
-    #     host="sp_home.eeho.cn:8080",
-    #     url="http://sp_home.eeho.cn:8080/speedtest/upload.php",
-    #     country="China",
-    #     cc="CN",
-    #     lat=0.0,
-    #     lon=0.0,
-    #     distance=40,
-    #     preferred=0,
-    #     https_functional=1,
-    #     force_ping_select=1,
-    #     show=1,
-    #     internal=0
-    # )
+    server_info = SpeedtestServer(
+        sponsor="江苏移动 5G",
+        name="镇江",
+        host="5gzhenjiang.speedtest.jsinfo.net.prod.hosts.ooklaserver.net:8080",
+        url="http://5gzhenjiang.speedtest.jsinfo.net:8080/speedtest/upload.php",
+        country="China",
+        cc="CN",
+        lat=0.0,
+        lon=0.0,
+        distance=0,
+        preferred=0,
+        https_functional=1,
+        force_ping_select=1,
+        show=1,
+        internal=0
+    )
     #
     # # 添加记录到会话并提交更改
-    # session.add(server_info)
-    # session.commit()
-
+    session.add(server_info)
+    session.commit()
