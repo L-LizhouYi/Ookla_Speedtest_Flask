@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, render_template, request, redirect, url_for
 from modules.ip_info import get_ip_info
-from modules.sqlite_server import Speedtest
+from modules.db_utils import Speedtest
 
 app = Flask(__name__)
 app.config['STATIC_URL_PATH'] = '/static'

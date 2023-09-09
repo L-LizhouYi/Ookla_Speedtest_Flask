@@ -15,82 +15,8 @@
         var rootDomain = "{{ greeting.rootDomain }}";
         var backgroundColor = "{{ greeting.backgroundColor }}";
         var primaryColor = "{{ greeting.primaryColor }}"
-
-        window.ST_PARAMS = {
-            {##}
-            "subdomain": subdomain,
-            "testConfiguration": {
-                "testConfigurationId": 92320,
-                "subscriptionId": 12000242,
-                "subdomain": "loukky",
-                "createdDate": "2020-08-11T13:21:35.000Z",
-                "modifiedDate": "2020-08-11T13:21:35.000Z",
-                "allowedServers": 0,
-                "serverNetwork": "speedtest",
-                "dataProtectionContactId": 0,
-                "resellerContactId": 0,
-                "apiKey": null,
-                "originHost": null,
-                "autoStart": false,
-                "clientIcon": "user",
-                "customerServers": [],
-                "distanceUnits": "mi",
-                "embedUrls": ["loukky.com"],
-                "httpsOnly": false,
-                "isActive": true,
-                "isUpgradeDisabled": true,
-                "allowSpeedtestUrls": false,
-                "passwordProtected": false,
-                "themeColors": {
-                    "backgroundColor": backgroundColor,
-                    "primaryColor": primaryColor
-                },
-                "serverIcon": "internet",
-                "speedLabel": "Mbps",
-                "defaultMaxSpeed": "100",
-                "testTypes": ["ping", "jitter", "download", "upload"],
-                "isPaid": true,
-                "isEUCountry": false
-            },
-            "config": {
-                {#替换成自个的#}
-                "rootDomain": rootDomain,
-                "logoCdnUrl": "https://logos.speedtestcustom.com/prod/",
-                "countriesWithVat": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "GB"],
-                "premiumSubscriptionBasePrice": 1995,
-                "premiumSubscriptionServerPrice": 995,
-                "auth0": {
-                    "domain": "ookla.auth0.com",
-                    "clientId": "qZ22rLQ3HmY102QN05DIQGqFkz3AHdFr",
-                    "loginRedirectUrl": "https://account.speedtestcustom.com",
-                    "logoutRedirectUrl": "https://account.speedtestcustom.com/login",
-                    "forgotPasswordLink": "https://account.speedtestcustom.com/reset-password",
-                    "authorization": {
-                        "audience": "https://api.st-connect.com"
-                    },
-                    "management": {
-                        "connection": "OOKLA-AUTH"
-                    }
-                },
-                "privacyPolicyUpdated": "2018-05-18"
-            },
-            "injectDataForPerfTesting": false,
-            "engineOverrides": {
-                "download": null,
-                "upload": null
-            },
-            "logging": {
-                "jwtToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ImY3Zjg3NTg5LTZiNDktNDRmMi1iODcyLTRlODFhOTE5N2NlMiIsInR5cGUiOiJoZWFkZXIifQ.Ioz8gBVRsZfqC8e0MkCkQBVZUewmfuCT-BWg2yaLSvw",
-                "buildId": 1693266242330,
-                "level": "info"
-            },
-            "engine": {},
-            "serverList": [],
-            "testGlobals": testGlobals,
-            "testReport": testReport
-        };
-
     </script>
+    <script src="{{ url_for('static', filename='js/index.js', _external=True) }}"></script>
 </head>
 <body style='margin:0;padding:0;height:100%;'>
 <div id="root"></div>

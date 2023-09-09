@@ -5721,7 +5721,7 @@
 					})), f += "';\n";
 					var h = Oe.call(t, "variable") && t.variable;
 					if (h) {
-						if (ee.test(h)) throw new $("Invalid `variable` option passed into `_.template`")
+						if (ee.test(h)) throw new $("Invalid variable option passed into _.template")
 					} else f = "with (obj) {\n" + f + "\n}\n";
 					f = (i ? f.replace(R, "") : f)
 						.replace(D, "$1")
@@ -15720,16 +15720,8 @@
 			var n = this;
 			if (function(e, t) {
 				if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function")
-			}(this, e), !t || !t.jwtToken) throw new Error("Cannot create logger: missing jwtToken option");
-			this._config = {
-					jwtToken: t.jwtToken,
-					endpoint: t.endpoint || "/logging-api/log",
-					errorStreakThreshold: t.errorStreakThreshold || 10,
-					flushInterval: t.flushInterval || 3e3,
-					maxFlushInterval: t.maxFlushInterval || 9e4,
-					minLevel: t.level && u[t.level] || u.info,
-					buildId: t.buildId
-				}, Object.keys(u)
+			}(this, e)) throw new Error("Cannot create logger: missing jwtToken option");
+			this._config = {}, Object.keys(u)
 				.forEach((function(e) {
 					n[e] = u[e] >= n._config.minLevel ? function() {
 						for (var t = arguments.length, r = new Array(t), o = 0; o < t; o++) r[o] = arguments[o];
