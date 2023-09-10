@@ -24,7 +24,7 @@
 git clone https://github.com/L-LizhouYi/Ookla_Speedtest_Flask.git
 python3 -m pip install -r requirements.txt
 python3 modules/sqlite_server.py #先初始化数据库
-python3 app.py
+python3 run.py
 ```
 
 网上收集的一些节点，不保证可用性毕竟都自建了。

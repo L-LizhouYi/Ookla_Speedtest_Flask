@@ -1,43 +1,22 @@
-from flask import Flask, jsonify, render_template, request, redirect, url_for
-from modules.config import *
-from modules.ip_info import get_ip_info
-from modules.db_utils import Speedtest
+from flask import Blueprint, render_template,request,redirect,url_for,jsonify,current_app
+from app.modules.db_utils import Speedtest
+from app.modules.ip_info import *
+from app.config import *
 
-app = Flask(__name__)
-app.config['STATIC_URL_PATH'] = '/static'
-TEMPLATE_NAME = 'index.html'
+app_views = Blueprint('app_views', __name__)
 
 # 初始化数据库
 ObjSpeedtest = Speedtest()
 
-# 定义上下文全局变量
-@app.context_processor
-def inject_global_variables():
-    greeting = {
-        "title":STYLE_TITLE,
-        "subdomain": STYLE_SUBDOMAIN,
-        "rootDomain": STYLE_ROOTDOMAIN,
-        "backgroundColor": STYLE_BACKGROUNGCOLOR,
-        "primaryColor": STYLE_PRIMARYCOLOR
-    }
-    return dict(greeting=greeting)
-
 # 根路由
-@app.route('/')
+@app_views.route('/')
 def index():
     client_ip = request.remote_addr
     data_ip = get_ip_info(client_ip)
     return render_template(TEMPLATE_NAME, data_ip=data_ip, data_rep=None)
 
-
-# 处理 404 错误的函数
-@app.errorhandler(404)
-def not_found(error):
-    return redirect(url_for('index'))  # 重定向到根路径
-
-
 # 返回Speedtest Server
-@app.route('/api/js/servers', methods=['GET'])
+@app_views.route('/api/js/servers', methods=['GET'])
 def get_json_datas():
     limit = request.args.get('limit')
     search = request.args.get('search', None)
@@ -54,7 +33,7 @@ def get_json_datas():
 
 
 # 测速完成，用于接收数据
-@app.route('/report', methods=['POST'])
+@app_views.route('/report', methods=['POST'])
 def post_report_data():
     form_data = request.form.to_dict()
     ispName = form_data.get('clientip')
@@ -86,12 +65,12 @@ def post_report_data():
         return jsonify({"resultid": guid})
     except Exception as e:
         # 处理数据库操作异常
-        app.logger.error(f"Error while adding speedtest log: {str(e)}")
-        return redirect(url_for('index'))
+        current_app.logger.error(f"Error while adding speedtest log: {str(e)}")
+        return redirect(url_for('app_views.index'))
 
 
 # 根据 result_guid 获取历史记录
-@app.route('/result/<string:result_guid>')
+@app_views.route('/result/<string:result_guid>')
 def get_history(result_guid):
     client_ip = request.remote_addr
     data_ip = get_ip_info(client_ip)
@@ -100,10 +79,5 @@ def get_history(result_guid):
         return render_template(TEMPLATE_NAME, data_ip=data_ip, data_rep=history_data)
     except Exception as e:
         # 处理数据库查询异常
-        app.logger.error(f"Error while fetching speedtest history: {str(e)}")
-        return redirect(url_for('index'))
-
-
-# 启动应用
-if __name__ == '__main__':
-    app.run(host=APP_HOST, port=APP_PORT, debug=APP_DEBUG)
+        current_app.logger.error(f"Error while fetching speedtest history: {str(e)}")
+        return redirect(url_for('app_views.index'))
