@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, render_template, request, redirect, url_for
+from modules.config import *
 from modules.ip_info import get_ip_info
 from modules.db_utils import Speedtest
 
@@ -13,11 +14,11 @@ ObjSpeedtest = Speedtest()
 @app.context_processor
 def inject_global_variables():
     greeting = {
-        "title":"Ookla_Speedtest_Flask",
-        "subdomain": "Ookla",
-        "rootDomain": "speedtest.net",
-        "backgroundColor": "#ffffff",
-        "primaryColor": "#120d14"
+        "title":STYLE_TITLE,
+        "subdomain": STYLE_SUBDOMAIN,
+        "rootDomain": STYLE_ROOTDOMAIN,
+        "backgroundColor": STYLE_BACKGROUNGCOLOR,
+        "primaryColor": STYLE_PRIMARYCOLOR
     }
     return dict(greeting=greeting)
 
@@ -105,4 +106,4 @@ def get_history(result_guid):
 
 # 启动应用
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=80, debug=True)
+    app.run(host=APP_HOST, port=APP_PORT, debug=APP_DEBUG)
