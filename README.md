@@ -23,7 +23,6 @@
 ```bash
 git clone https://github.com/L-LizhouYi/Ookla_Speedtest_Flask.git
 python3 -m pip install -r requirements.txt
-python3 modules/sqlite_server.py #先初始化数据库
 python3 run.py
 ```
 
