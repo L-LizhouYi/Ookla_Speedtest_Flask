@@ -1,5 +1,6 @@
 from sqlalchemy.orm import sessionmaker
-from .sqlite_server import SpeedtestServer,SpeedtestHistory,engine
+from sqlalchemy.exc import OperationalError
+from .sqlite_server import SpeedtestServer,SpeedtestHistory,engine,Base
 class Speedtest:
     def __init__(self):
         self.Session = sessionmaker(bind=engine)
@@ -10,31 +11,35 @@ class Speedtest:
 
     # 从数据库中获取服务器
     def get_servers(self, limit, search_engine):
-        query = self.session.query(SpeedtestServer)
-        if search_engine != "js":
-            query = query.filter(SpeedtestServer.sponsor.like(f"%{search_engine}%"))
+        try:
+            query = self.session.query(SpeedtestServer)
+            if search_engine != "js":
+                query = query.filter(SpeedtestServer.sponsor.like(f"%{search_engine}%"))
 
-        server_records = query.limit(limit).all()
-        return [
-            {
-                "id": server.id,
-                "sponsor": server.sponsor,
-                "name": server.name,
-                "host": server.host,
-                "url": server.url,
-                "country": server.country,
-                "cc": server.cc,
-                "lat": server.lat,
-                "lon": server.lon,
-                "distance": server.distance,
-                "preferred": server.preferred,
-                "https_functional": server.https_functional,
-                "force_ping_select": server.force_ping_select,
-                "show": server.show,
-                "internal": server.internal
-            }
-            for server in server_records
-        ]
+            server_records = query.limit(limit).all()
+            return [
+                {
+                    "id": server.id,
+                    "sponsor": server.sponsor,
+                    "name": server.name,
+                    "host": server.host,
+                    "url": server.url,
+                    "country": server.country,
+                    "cc": server.cc,
+                    "lat": server.lat,
+                    "lon": server.lon,
+                    "distance": server.distance,
+                    "preferred": server.preferred,
+                    "https_functional": server.https_functional,
+                    "force_ping_select": server.force_ping_select,
+                    "show": server.show,
+                    "internal": server.internal
+                }
+                for server in server_records
+            ]
+        except OperationalError:
+            Base.metadata.create_all(engine)
+            return []
 
     # 通过id获取单个服务器信息
     def get_server_info(self, id):
