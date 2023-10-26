@@ -11,7 +11,7 @@ ObjSpeedtest = Speedtest()
 # 根路由
 @app_views.route('/')
 def index():
-    client_ip = request.remote_addr
+    client_ip = request.headers.get('X-Forwarded-For', request.headers.get('X-Real-IP', request.remote_addr))
     data_ip = get_ip_info(client_ip)
     return render_template(TEMPLATE_NAME, data_ip=data_ip, data_rep=None)
 
