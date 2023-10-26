@@ -45,7 +45,7 @@ def is_reserved(ip):
 def get_ip_info(ip):
     test_globals = {
         "ipAddress": "127.0.0.1",
-        "ispName": "LocalHost",
+        "ispName": "Internal Network",
         "ispId": 0,
         "location": {
             "latitude": 0,
