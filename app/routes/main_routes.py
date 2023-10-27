@@ -72,7 +72,7 @@ def post_report_data():
 # 根据 result_guid 获取历史记录
 @app_views.route('/result/<string:result_guid>')
 def get_history(result_guid):
-    client_ip = request.remote_addr
+    client_ip = request.headers.get('X-Forwarded-For', request.headers.get('X-Real-IP', request.remote_addr))
     data_ip = get_ip_info(client_ip)
     try:
         history_data = ObjSpeedtest.get_speedtest_log(result_guid)
