@@ -3,4 +3,3 @@ __pycache__
 venv
 speedtest.db
 .DS_Store
-static/js/*.js linguist-vendored
