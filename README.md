@@ -55,6 +55,9 @@ INSERT INTO "main"."speedtest_servers"("id", "sponsor", "name", "host", "url", "
 在内网部署的话有个痛点，Speedtest Server必须是https否则在测速服务器列表中不显示，解决办法有两个<br />第一个就是自签SSL，手动添加CA信任证书
 这样做每个设备都需要添加，不太现实。<br />第二个办法就是，使用泛域名证书 配合DNS解析 (推荐)
 
+### 0x02
+在使用Nginx反向代理时若使用SSL则需要添加 "add_header Content-Security-Policy upgrade-insecure-requests;"
+
 ## 写在最后
 
 没啥好写的 Email liulang@eeho.cn 
