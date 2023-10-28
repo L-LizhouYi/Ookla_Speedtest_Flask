@@ -1,29 +1,21 @@
-import requests
 from bisect import bisect_right
+from app.config import RESERVED_IPV4,IPINFO_API
+import requests
 
-RESERVED_IPV4 = [
-    '0.0.0.0/8',
-    '10.0.0.0/8',
-    '100.64.0.0/10',
-    '127.0.0.0/8',
-    '169.254.0.0/16',
-    '172.16.0.0/12',
-    '192.0.0.0/24',
-    '192.0.2.0/24',
-    '192.88.99.0/24',
-    '192.168.0.0/16',
-    '198.18.0.0/15',
-    '198.51.100.0/24',
-    '203.0.113.0/24',
-    '224.0.0.0/4',
-    '233.252.0.0/24',
-    '240.0.0.0/4',
-    '255.255.255.255/32'
-]
-
-API_URL = "http://ip-api.com/json/"
-
-
+test_globals_template = {
+    "ipAddress": "127.0.0.1",
+    "ispName": "Internal Network",
+    "ispId": 0,
+    "location": {
+        "latitude": 0,
+        "longitude": 0,
+        "cityName": "unknown",
+        "countryCode": "unknown",
+        "countryName": "unknown",
+        "regionCode": "unknown",
+        "regionName": "unknown"
+    }
+}
 def ip2int(ip):
     return sum(int(p) << i for i, p in zip([24, 16, 8, 0], ip.split('.')))
 
@@ -43,26 +35,12 @@ def is_reserved(ip):
 
 
 def get_ip_info(ip):
-    test_globals = {
-        "ipAddress": "127.0.0.1",
-        "ispName": "Internal Network",
-        "ispId": 0,
-        "location": {
-            "latitude": 0,
-            "longitude": 0,
-            "cityName": "unknown",
-            "countryCode": "unknown",
-            "countryName": "unknown",
-            "regionCode": "unknown",
-            "regionName": "unknown"
-        }
-    }
-
+    test_globals = test_globals_template
     if is_reserved(ip2int(ip)):
         test_globals["ipAddress"] = ip
     else:
         try:
-            response = requests.get(f"{API_URL}{ip}")
+            response = requests.get(f"{IPINFO_API}{ip}")
             if response.status_code == 200:
                 res_json = response.json()
                 location = test_globals["location"]
